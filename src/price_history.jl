@@ -68,7 +68,7 @@ weekly: 1*
 monthly: 1*
 """
 function price_history(ticker, freq, peri)
-    freq > peri && ArgumentError("Period must be larger than frequency")
+    Dates.toms(freq) > Dates.toms(peri) && ArgumentError("Period must be larger than frequency")
     frequencyType = freq_str[typeof(freq).name |> string]
     frequency = freq.value
     periodType = peri_str[typeof(peri).name |> string]

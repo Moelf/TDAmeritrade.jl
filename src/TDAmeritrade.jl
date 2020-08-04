@@ -23,7 +23,8 @@ mutable struct AUTH_KEYS{T<:AbstractString}
     ACCESS_TOKEN::T
     REFRESH_TOKEN::T
     CALLBACK_URI::T
-    AUTH_KEYS() = new{String}("", "", "", "","http://localhost")
+    LAST_REFRESH::DateTime
+    AUTH_KEYS() = new{String}("", "", "", "","http://localhost",now()-Hour(1))
 end
 
 AUTH_KEY = AUTH_KEYS()

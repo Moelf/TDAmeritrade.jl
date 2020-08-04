@@ -31,6 +31,10 @@ function access_token(code)
 end
 
 function refresh(refresh_token)
+    if now() - AUTH_KEY.LAST_REFRESH < Minute(29)
+        @info "Refresh not needed"
+        return AUTH_KEY.ACCESS_TOKEN
+    end
     url = "https://api.tdameritrade.com/v1/oauth2/token"
     params = HTTP.escape([
               "grant_type" => "refresh_token",
@@ -45,6 +49,7 @@ function refresh(refresh_token)
                 ["Content-Type"=>"application/x-www-form-urlencoded"],
                 params
                ).body |> String |> JSON3.read
+    AUTH_KEY.LAST_REFRESH = now()
     json_result[:access_token]
 end
 
@@ -74,6 +79,7 @@ function inter_auth()
         token = access_token(AUTH_KEY.CODE)
         AUTH_KEY.ACCESS_TOKEN, AUTH_KEY.REFRESH_TOKEN = token[:access_token], token[:refresh_token]
 
+        AUTH_KEY.LAST_REFRESH = now()
         @info "creating cache at $cache_path for tokens"
         open(cache_path, "w") do io
             writedlm(io, [AUTH_KEY.REFRESH_TOKEN today()], ',')
