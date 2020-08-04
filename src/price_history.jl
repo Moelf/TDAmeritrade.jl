@@ -77,7 +77,7 @@ function price_history(ticker, freq, peri)
 end
 
 """
-price_history(ticker, start=now()-Day(1), stop=now(), frequency=Minute(15))
+price_history(ticker, freq, start::DateTime=now()-Day(1), stop::DateTime=now())
 
 get the price history with `interval` ticks from `start` to `stop`
 
