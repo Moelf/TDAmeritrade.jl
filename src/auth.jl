@@ -30,30 +30,50 @@ function access_token(code)
     json_result
 end
 
-function inter_auth(KEY=AUTH_KEY)
-    KEY.CONSUMER_KEY = try
+function refresh(refresh_token)
+    url = "https://api.tdameritrade.com/v1/oauth2/token"
+    params = HTTP.escape([
+              "grant_type" => "refresh_token",
+              "refresh_token" => refresh_token,
+              "access_type" => "",
+              "code" => "",
+              "client_id" => AUTH_KEY.CONSUMER_KEY,
+              "redirect_uri" => ""
+             ])
+    json_result = HTTP.post(
+                            url,
+                ["Content-Type"=>"application/x-www-form-urlencoded"],
+                params
+               ).body |> String |> JSON3.read
+    json_result[:access_token]
+end
+
+function inter_auth()
+    AUTH_KEY.CONSUMER_KEY = try
         ENV["JL_TD_CONSUMER_KEY"]
     catch
         error("Key environmen variable JL_TD_CONSUMER_KEY not found")
     end
 
-    KEY.CODE = try
-        ENV["JL_TD_CODE"]
+    AUTH_KEY.REFRESH_TOKEN = try
+        ENV["JL_TD_REFRESH_TOKEN"]
     catch
-        @info "first time auth needs manual invervention"
         ""
     end
 
-    if KEY.CODE |> isempty
-        @info initial_auth()
-        @info "paste code=<blah> from address bar to here"
+    if AUTH_KEY.REFRESH_TOKEN == ""
+        @info "first time auth needs manual invervention"
+        println(initial_auth())
+        @info "extract code=<copy this> from address bar to here"
         print("code:")
-        KEY.CODE = readline() |> HTTP.URIs.unescapeuri
+        AUTH_KEY.CODE = readline() |> HTTP.URIs.unescapeuri
+        token = access_token(AUTH_KEY.CODE)
+        AUTH_KEY.ACCESS_TOKEN, AUTH_KEY.REFRESH_TOKEN = token[:access_token], token[:refresh_token]
+    else
+        @info "REFRESH_TOKEN found, refreshing ACCESS_TOKEN"
+        AUTH_KEY.CODE = refresh(AUTH_KEY.REFRESH_TOKEN)
     end
 
-    token = access_token(KEY.CODE)
-    KEY.ACCESS_TOKEN, KEY.REFRESH_TOKEN = token[:access_token], token[:refresh_token]
-
-    @info "interactive auth done"
+    @info "Authentication completed."
     nothing
 end
