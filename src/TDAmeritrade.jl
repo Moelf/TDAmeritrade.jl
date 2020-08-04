@@ -1,10 +1,10 @@
 module TDAmeritrade
 
-using HTTP 
-using JSON3
+using HTTP, JSON3, Pipe
 
 include("auth.jl")
 include("price_history.jl")
+include("quotes.jl")
 
 function construct_api(path, query=Dict())
     HTTP.URI(
