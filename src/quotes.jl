@@ -8,12 +8,11 @@ required:
 ticker
 """
 function get_quotes(ticker::AbstractString)
-    kwargs = Dict(
-                  "apikey" => AUTH_KEY.CONSUMER_KEY,
-                  "Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN
-                 )
-    uri = construct_api("marketdata/$ticker/quotes", kwargs)
-    return @pipe HTTP.get(uri).body |> JSON3.read |> _[Symbol(ticker)]
+    uri = construct_api("marketdata/$ticker/quotes")
+    head = ["Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN]
+    # Authorization is a header
+    return @pipe HTTP.get(uri, head).body |> 
+                 JSON3.read |> _[Symbol(ticker)]
 end
 
 """
@@ -24,9 +23,10 @@ get multiple quotes at once
 function get_quotes(tickers::Array{T,1}) where T<:AbstractString
     kwargs = Dict(
                   "symbol" => join(tickers, ","),
-                  "apikey" => AUTH_KEY.CONSUMER_KEY,
-                  "Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN
                  )
     uri = construct_api("marketdata/quotes", kwargs)
-    return @pipe HTTP.get(uri).body |> JSON3.read
+    head = ["Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN]
+    # Authorization is a header
+    return @pipe HTTP.get(uri, head).body |> 
+                 JSON3.read
 end

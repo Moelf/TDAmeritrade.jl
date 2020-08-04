@@ -1,6 +1,8 @@
 module TDAmeritrade
 
-using HTTP, JSON3, Pipe
+export inter_auth, price_history, get_quotes
+
+using HTTP, JSON3, Pipe, DelimitedFiles, Dates
 
 include("auth.jl")
 include("price_history.jl")

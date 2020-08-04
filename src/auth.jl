@@ -49,29 +49,38 @@ function refresh(refresh_token)
 end
 
 function inter_auth()
+    cache_path = joinpath(homedir(), ".JL_TD_TOKENS_CACHE")
+    if isfile(cache_path)
+        last_refresh, last_date = readdlm(cache_path, ',')
+        if Date(last_date) > today() - Day(89) # refresh token expires every 90 days
+            AUTH_KEY.REFRESH_TOKEN = last_refresh
+        else
+            @info "Cached token is too old, getting new one"
+        end
+    end
+
     AUTH_KEY.CONSUMER_KEY = try
         ENV["JL_TD_CONSUMER_KEY"]
     catch
         error("Key environmen variable JL_TD_CONSUMER_KEY not found")
     end
 
-    AUTH_KEY.REFRESH_TOKEN = try
-        ENV["JL_TD_REFRESH_TOKEN"]
-    catch
-        ""
-    end
-
     if AUTH_KEY.REFRESH_TOKEN == ""
-        @info "first time auth needs manual invervention"
+        @info "First time auth needs manual invervention,"
         println(initial_auth())
         @info "extract code=<copy this> from address bar to here"
         print("code:")
         AUTH_KEY.CODE = readline() |> HTTP.URIs.unescapeuri
         token = access_token(AUTH_KEY.CODE)
         AUTH_KEY.ACCESS_TOKEN, AUTH_KEY.REFRESH_TOKEN = token[:access_token], token[:refresh_token]
+
+        @info "creating cache at $cache_path for tokens"
+        open(cache_path, "w") do io
+            writedlm(io, [AUTH_KEY.REFRESH_TOKEN today()], ',')
+        end
     else
         @info "REFRESH_TOKEN found, refreshing ACCESS_TOKEN"
-        AUTH_KEY.CODE = refresh(AUTH_KEY.REFRESH_TOKEN)
+        AUTH_KEY.ACCESS_TOKEN = refresh(AUTH_KEY.REFRESH_TOKEN)
     end
 
     @info "Authentication completed."
