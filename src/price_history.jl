@@ -45,7 +45,7 @@ function price_history(ticker; kwargs...)
                       )
           )
     uri = construct_api("marketdata/$ticker/pricehistory", kwargs)
-    return @pipe HTTP.get(uri).body |> JSON3.read |> _[:candles]
+    return @pipe HTTP.get(uri; retries = 2).body |> JSON3.read |> _[:candles]
 end
 
 """
