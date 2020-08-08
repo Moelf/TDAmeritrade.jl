@@ -2,7 +2,8 @@ module TDAmeritrade
 
 export inter_auth, price_history, get_quotes
 
-using HTTP, JSON3, Pipe, DelimitedFiles, Dates
+using HTTP, JSON3, DelimitedFiles, Dates
+using Pipe: @pipe
 
 include("auth.jl")
 include("price_history.jl")
@@ -17,7 +18,7 @@ function construct_api(path, query=Dict())
    )
 end
 
-mutable struct AUTH_KEYS{T<:AbstractString}
+mutable struct CREDENTIALS{T<:AbstractString}
     CONSUMER_KEY::T
     CODE::T
     ACCESS_TOKEN::T
@@ -27,5 +28,9 @@ mutable struct AUTH_KEYS{T<:AbstractString}
     AUTH_KEYS() = new{String}("", "", "", "","http://localhost",now()-Hour(1))
 end
 
-AUTH_KEY = AUTH_KEYS()
+function __init__()
+    global AUTH_KEY = CREDENTIALS()
+    inter_auth()
+end
+
 end

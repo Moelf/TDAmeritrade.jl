@@ -20,7 +20,7 @@ get_quotes(tickers::Array)
 
 get multiple quotes at once
 """
-function get_quotes(tickers::Array{T,1}) where T<:AbstractString
+function get_quotes(tickers::AbstractArray{T,1}) where T<:AbstractString
     kwargs = Dict(
                   "symbol" => join(tickers, ","),
                  )

@@ -53,7 +53,7 @@ function refresh(refresh_token)
     json_result[:access_token]
 end
 
-function inter_auth()
+function TD_auth()
     cache_path = joinpath(homedir(), ".JL_TD_TOKENS_CACHE")
     if isfile(cache_path)
         last_refresh, last_date = readdlm(cache_path, ',')
