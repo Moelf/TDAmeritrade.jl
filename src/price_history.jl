@@ -60,7 +60,10 @@ function price_history(ticker, freq, peri)
     periodType = peri_str[typeof(peri)]
     period = peri.value
 
-    @compat price_history(ticker; periodType, period, frequencyType, frequency)
+    price_history(ticker; periodType=periodType, 
+                        period=period, 
+                        frequencyType=frequencyType, 
+                        frequency=frequency)
 end
 
 """
@@ -76,5 +79,8 @@ function price_history(ticker, freq, start::DateTime=now()-Day(1), stop::DateTim
     startDate, endDate = ms_since_epoch.((start, stop))
     frequencyType = freq_str[typeof(freq)]
     frequency = freq.value
-    @compat price_history(ticker; startDate, endDate, frequencyType, frequency)
+    price_history(ticker; startDate=startDate, 
+                endDate=endDate, 
+                frequencyType=frequencyType, 
+                frequency=frequency)
 end
