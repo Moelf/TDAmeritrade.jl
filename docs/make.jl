@@ -10,8 +10,9 @@ makedocs(
     clean=true
 )
 
-deploydocs(deps=Deps.pip("mkdocs", "python-markdown-math"),
+deploydocs(
            repo="github.com/Moelf/TDAmeritrade.jl.git",
            devbranch="master",
            devurl="dev",
-           versions=["stable" => "v^", "v#.#", "dev" => "dev"])
+           versions=["stable" => "v^", "v#.#", "dev" => "dev"]
+          )

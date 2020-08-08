@@ -30,11 +30,6 @@ end
 
 function __init__()
     global AUTH_KEY = CREDENTIALS()
-    try
-        TD_auth()
-    catch
-        @info "Authentication failed"
-    end
 end
 
 end
