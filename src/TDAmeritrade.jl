@@ -4,6 +4,7 @@ export TD_auth, price_history, get_quotes
 
 using HTTP, JSON3, DelimitedFiles, Dates
 using Pipe: @pipe
+using Compat #for f(;kwarsg...) short-cut introduced in 1.5
 
 include("auth.jl")
 include("price_history.jl")
