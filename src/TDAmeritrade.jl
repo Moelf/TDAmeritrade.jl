@@ -1,6 +1,6 @@
 module TDAmeritrade
 
-export inter_auth, price_history, get_quotes
+export TD_auth, price_history, get_quotes
 
 using HTTP, JSON3, DelimitedFiles, Dates
 using Pipe: @pipe
@@ -25,12 +25,16 @@ mutable struct CREDENTIALS{T<:AbstractString}
     REFRESH_TOKEN::T
     CALLBACK_URI::T
     LAST_REFRESH::DateTime
-    AUTH_KEYS() = new{String}("", "", "", "","http://localhost",now()-Hour(1))
+    CREDENTIALS() = new{String}("", "", "", "","http://localhost",now()-Hour(1))
 end
 
 function __init__()
     global AUTH_KEY = CREDENTIALS()
-    inter_auth()
+    try
+        TD_auth()
+    catch
+        @info "Authentication failed"
+    end
 end
 
 end
