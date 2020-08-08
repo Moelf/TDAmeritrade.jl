@@ -19,13 +19,13 @@ get the milisecond since UNIX EPOCH of a DateTime object.
 ms_since_epoch(t::DateTime) = Dates.value(t) - Dates.UNIXEPOCH
 
 """
-price_history(ticker; kwargs...)
+    price_history(ticker; kwargs...)
 
 Get price history of a given ticker, everything but `ticker` have
 default value specified by TD api: 
 https://developer.tdameritrade.com/price-history/apis/get/marketdata/{symbol}/pricehistory
 
-optional kwargs:
+# Optional kwargs:
 periodType
 period
 frequencyType
@@ -34,6 +34,14 @@ endDate
 startDate
 needExtendedHoursData
 
+# Examples
+```julia
+using Dates
+
+price_history("GE", Minute(1), Day(1)) #a tick = a day for the past day
+price_history("GE", Day(1), Year(2)) #a tick = a day for the past 2 years
+price_history("AAPL", Day(1), now()-Day(1), now())
+```
 """
 function price_history(ticker; kwargs...)
     kwargs = Dict(kwargs)

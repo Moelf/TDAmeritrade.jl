@@ -1,11 +1,17 @@
 """
-get_quotes(ticker)
+    get_quotes(ticker)
+    get_quotes(ticker::Array)
 
 Get quote of a symbol:
 https://developer.tdameritrade.com/quotes/apis/get/marketdata/{symbol}/quotes
 
-required:
-ticker
+`ticker` can be a single `String` or an `Array` or multiple `String`s
+
+# Examples
+```julia
+get_quotes("GE")
+get_quotes(["BA","GE"])
+```
 """
 function get_quotes(ticker::AbstractString)
     uri = construct_api("marketdata/$ticker/quotes")
@@ -15,11 +21,6 @@ function get_quotes(ticker::AbstractString)
                  JSON3.read |> _[Symbol(ticker)]
 end
 
-"""
-get_quotes(tickers::Array)
-
-get multiple quotes at once
-"""
 function get_quotes(tickers::AbstractArray{T,1}) where T<:AbstractString
     kwargs = Dict(
                   "symbol" => join(tickers, ","),
