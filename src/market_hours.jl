@@ -17,10 +17,11 @@ market_hours("OPTION", "2020-08-08")
 market_hours(["OPTION", "FUTURE", "EQUITY"], today() + Day(1))
 """
 function market_hours(market::AbstractString, date=today()::Date)
-    request_dict = Dict(
-        "apikey" => AUTH_KEY.CONSUMER_KEY,
-        "date" => string(date)
+    request_dict = (
+        apikey = AUTH_KEY.CONSUMER_KEY, 
+        date = string(date)
     )
+
     uri = construct_api("marketdata/$market/hours", request_dict)
     head = ["Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN]
     return @pipe HTTP.get(uri, head).body |>
@@ -30,10 +31,10 @@ function market_hours(market::AbstractString, date=today()::Date)
 end
 
 function market_hours(market::AbstractArray{T, 1}, date=today()::Date) where T<:AbstractString
-    request_dict = Dict(
-        "apikey" => AUTH_KEY.CONSUMER_KEY,
-        "markets" => join(market, ","),
-        "date" => string(date)
+    request_dict = (
+        apikey = AUTH_KEY.CONSUMER_KEY,
+        markets = join(market, ","),
+        date = string(date)
     )
 
     uri = construct_api("marketdata/hours", request_dict)
