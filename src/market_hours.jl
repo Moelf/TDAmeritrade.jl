@@ -13,8 +13,8 @@ https://developer.tdameritrade.com/market-hours/apis/get/marketdata/hours
 # Examples
 ```julia
 market_hours("OPTION", "2020-08-08")
-```
 market_hours(["OPTION", "FUTURE", "EQUITY"], today() + Day(1))
+```
 """
 function market_hours(market::AbstractString, date=today()::Date)
     kwargs = (

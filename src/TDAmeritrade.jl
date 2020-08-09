@@ -1,6 +1,6 @@
 module TDAmeritrade
 
-export TD_auth, price_history, get_quotes, get_movers
+export TD_auth, price_history, get_quotes, get_movers, market_hours
 
 using HTTP, JSON3, DelimitedFiles, Dates
 using Pipe: @pipe
