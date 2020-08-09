@@ -8,6 +8,7 @@ using Pipe: @pipe
 include("auth.jl")
 include("price_history.jl")
 include("quotes.jl")
+include("market_hours.jl")
 
 function construct_api(path, query=Dict())
     HTTP.URI(
