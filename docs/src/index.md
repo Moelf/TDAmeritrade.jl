@@ -20,4 +20,5 @@ get_movers
 price_history
 get_quotes
 market_hours
+option_chain
 ```

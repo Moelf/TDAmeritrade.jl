@@ -1,6 +1,6 @@
 module TDAmeritrade
 
-export TD_auth, price_history, get_quotes, get_movers, market_hours
+export TD_auth, price_history, get_quotes, get_movers, market_hours, option_chain
 
 using HTTP, JSON3, DelimitedFiles, Dates
 using Pipe: @pipe
@@ -10,6 +10,7 @@ include("movers.jl")
 include("price_history.jl")
 include("quotes.jl")
 include("market_hours.jl")
+include("option_chain.jl")
 
 function construct_api(path, query=NamedTuple())
     HTTP.URI(
