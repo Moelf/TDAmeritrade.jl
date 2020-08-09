@@ -18,4 +18,5 @@ A file will be created at `~/.JL_TD_TOKENS_CACHE` after first run to save the `R
 TD_auth
 price_history
 get_quotes
+market_hours
 ```
