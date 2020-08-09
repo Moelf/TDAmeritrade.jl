@@ -32,7 +32,7 @@ The files in `src` is ~ 1-to-1 with end points listed on TD's [website](https://
 - [ ] Accounts and Trading
 - [x] Authentication
 - [ ] Instruments
-- [ ] Market Hours
+- [x] Market Hours, cr. [@Cryptum169](https://github.com/Cryptum169)
 - [x] Movers
 - [ ] Option Chains
 - [x] Price History
