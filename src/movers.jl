@@ -12,7 +12,7 @@ chg = "value" or "percent"
 
 # Examples
 ```julia
-get_movers(raw"$DJI")
+get_movers(raw"\$DJI")
 get_movers("\$DJI", "up", "value")
 ```
 """
