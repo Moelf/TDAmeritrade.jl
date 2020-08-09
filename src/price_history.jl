@@ -44,11 +44,9 @@ price_history("AAPL", Day(1), now()-Day(1), now())
 ```
 """
 function price_history(ticker; kwargs...)
-    kwargs = Dict(kwargs)
-    kwargs = merge(kwargs, Dict(
-                       "apikey" => AUTH_KEY.CONSUMER_KEY,
-                       "Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN
-                      )
+    kwargs = (kwargs...,
+               apikey = AUTH_KEY.CONSUMER_KEY,
+               Authorization = "Bearer "*AUTH_KEY.ACCESS_TOKEN
           )
     uri = construct_api("marketdata/$ticker/pricehistory", kwargs)
     return @pipe HTTP.get(uri; retries = 1).body |> JSON3.read |> _[:candles]

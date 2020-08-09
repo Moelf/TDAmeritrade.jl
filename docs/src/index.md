@@ -16,6 +16,7 @@ A file will be created at `~/.JL_TD_TOKENS_CACHE` after first run to save the `R
 ## APIs
 ```@docs
 TD_auth
+get_movers
 price_history
 get_quotes
 ```

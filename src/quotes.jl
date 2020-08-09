@@ -22,10 +22,9 @@ function get_quotes(ticker::AbstractString)
 end
 
 function get_quotes(tickers::AbstractArray{T,1}) where T<:AbstractString
-    kwargs = Dict(
-                  "symbol" => join(tickers, ","),
-                 )
+    kwargs = (; symbol = join(tickers, ",")) # NamedTuple with 1 element
     uri = construct_api("marketdata/quotes", kwargs)
+    @show uri
     head = ["Authorization" => "Bearer "*AUTH_KEY.ACCESS_TOKEN]
     # Authorization is a header
     return @pipe HTTP.get(uri, head).body |> 

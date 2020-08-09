@@ -1,15 +1,16 @@
 module TDAmeritrade
 
-export TD_auth, price_history, get_quotes
+export TD_auth, price_history, get_quotes, get_movers
 
 using HTTP, JSON3, DelimitedFiles, Dates
 using Pipe: @pipe
 
 include("auth.jl")
+include("movers.jl")
 include("price_history.jl")
 include("quotes.jl")
 
-function construct_api(path, query=Dict())
+function construct_api(path, query=NamedTuple())
     HTTP.URI(
     host="api.tdameritrade.com",
     scheme="https",
