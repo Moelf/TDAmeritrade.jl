@@ -19,4 +19,5 @@ TD_auth
 get_movers
 price_history
 get_quotes
+market_hours
 ```

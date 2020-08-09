@@ -9,6 +9,7 @@ include("auth.jl")
 include("movers.jl")
 include("price_history.jl")
 include("quotes.jl")
+include("market_hours.jl")
 
 function construct_api(path, query=NamedTuple())
     HTTP.URI(
