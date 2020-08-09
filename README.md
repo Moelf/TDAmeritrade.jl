@@ -27,6 +27,20 @@ JSON3.Object{Array{UInt8,1},SubArray{UInt64,1,Array{UInt64,1},Tuple{UnitRange{In
   :datetime => 1596844740000
 ```
 
+## TO-DOs
+The files in `src` is ~ 1-to-1 with end points listed on TD's [website](https://developer.tdameritrade.com/apis), currently some of these are missing:
+[] Accounts and Trading
+[x] Authentication
+[] Instruments
+[] Market Hours
+[] Movers
+[] Option Chains
+[x] Price History
+[x] Quotes
+[] Transaction History
+[] ~~User Info and Preferences~~ probably not useful
+[] ~~Watchlist~~ probably not useful
+
 [build-img]: https://travis-ci.com/Moelf/TDAmeritrade.jl.svg?branch=master
 [build-url]: https://travis-ci.com/Moelf/TDAmeritrade.jl
 [docs-img]: https://img.shields.io/badge/docs-latest-blue.svg
