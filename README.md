@@ -33,7 +33,7 @@ The files in `src` is ~ 1-to-1 with end points listed on TD's [website](https://
 - [x] Authentication
 - [ ] Instruments
 - [ ] Market Hours
-- [ ] Movers
+- [x] Movers
 - [ ] Option Chains
 - [x] Price History
 - [x] Quotes
