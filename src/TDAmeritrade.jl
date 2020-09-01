@@ -27,7 +27,7 @@ mutable struct CREDENTIALS{T<:AbstractString}
     REFRESH_TOKEN::T
     CALLBACK_URI::T
     LAST_REFRESH::DateTime
-    CREDENTIALS() = new{String}("", "", "", "","http://localhost",now()-Hour(1))
+    CREDENTIALS() = new{String}("", "", "", "","https://localhost",now()-Hour(1))
 end
 
 function __init__()
