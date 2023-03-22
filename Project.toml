@@ -1,7 +1,7 @@
 name = "TDAmeritrade"
 uuid = "85f6aff6-1a1d-4afc-a0ba-df5513750661"
 authors = ["Moelf <proton@jling.dev> and contributors"]
-version = "0.1.2"
+version = "0.1.1"
 
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
