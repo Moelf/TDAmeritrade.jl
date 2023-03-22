@@ -52,22 +52,16 @@ jobs:
     name: Documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: julia-actions/cache@v1
+      - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
         with:
-          version: '1.8'
+          version: '1'
       - run: |
           julia --project=docs -e '
             using Pkg
             Pkg.develop(PackageSpec(path=pwd()))
             Pkg.instantiate()'
-      - run: |
-          julia --color=yes --project=docs/ -e '
-            using TDAmeritrade
-            # using Pkg; Pkg.activate("docs")
-            using Documenter: DocMeta, doctest
-            DocMeta.setdocmeta!(TDAmeritrade, :DocTestSetup, :(using TDAmeritrade); recursive=true)
-            doctest(TDAmeritrade)'
       - run: julia --project=docs docs/make.jl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
